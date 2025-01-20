@@ -11,7 +11,7 @@
 
 - nSLOC: 3006
 
-[//]: # "contest-details-open"
+[//]: # (contest-details-open)
 
 ## About the Project
 
@@ -83,8 +83,8 @@ Non-Trusted Actors:
   - Clients: Any offchain consumer, such as Zaros’ UI, an API service, etc.
 
 
-[//]: # "contest-details-close"
-[//]: # "scope-open"
+[//]: # (contest-details-close)
+[//]: # (scope-open)
 
 ## Scope (contracts)
 
@@ -161,8 +161,8 @@ Compatibilities:
       - ERC721 (Zaros Account NFT, AccountNFT.sol)
 ```
 
-[//]: # "scope-close"
-[//]: # "getting-started-open"
+[//]: # (scope-close)
+[//]: # (getting-started-open)
 
 ## Setup
 
@@ -179,8 +179,8 @@ Tests:
 Forge test
 ```
 
-[//]: # "getting-started-close"
-[//]: # "known-issues-open"
+[//]: # (getting-started-close)
+[//]: # (known-issues-open)
 
 ## Known Issues
 
