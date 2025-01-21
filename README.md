@@ -9,13 +9,15 @@
 - Starts: January 20, 2025 Noon UTC
 - Ends: February 06, 2025 Noon UTC
 
-- nSLOC: 3006
+- nSLOC: ~3258
+
+[//]: # (contest-details-open)
 
 [//]: # (contest-details-open)
 
 ## About the Project
 
-
+```
 Zaros is a Perpetuals DEX powered by Boosted (Re)Staking Vaults. It seeks to maximize LPs yield generation, while offering a top-notch trading experience on Arbitrum (and Monad in the future).
 
 Zaros connects Liquid Re(Staking) Tokens (LSTs & LRTs) and other yield bearing collateral types with its Perpetual Futures Engine, allowing LPs to amplify their returns with additional APY coming from trading fees. The protocol is composed of two separate, interconnected smart contracts systems:
@@ -58,38 +60,43 @@ The Market Making Engine serves as the liquidity backbone of Zaros' Perpetual Tr
   - Integration and Scalability: The Market Making Engine will support a range of ZLP vaults, each tied to specific markets or market clusters. This setup not only provides flexibility but also allows the engine to scale as more markets are added to the Zaros ecosystem.
 
 [Documentation](https://docs.zaros.fi/)
-
 [Website](https://zaros.fi/)
-
 [Twitter](https://x.com/zarosfi)
-
 [GitHub](https://github.com/zaros-labs)
-
+```
 
 ## Actors
 
-
+```
 Trusted Actors:
-
-  - **Perps Engine**: The perps engine root proxy contract address
-  - Market Making Engine: The market making engine root proxy contract address
-  - System Keeper: A trusted system keeper, often a Chainlink Automation upkeep, responsible by calling specific protocol functions based on a log or custom trigger, or by an arbitrary call.
-  - Chainlink Automation Forwarder: Trusted Chainlink Automation upkeep's forwarder address.
+    Perps Engine: The perps engine root proxy contract address
+    Market Making Engine: The market making engine root proxy contract address
+    System Keeper: A trusted system keeper, often a Chainlink Automation upkeep, responsible by calling specific protocol functions based on a log or custom trigger, or by an arbitrary call.
+    Chainlink Automation Forwarder: Trusted Chainlink Automation upkeep's forwarder address.
 
 Non-Trusted Actors:
-
-  - USDz swapper: Someone that holds USDz and desires to sell it for a Vault 's collateral asset.
-  - LPs: The market making engine's liquidity providers, i.e users that deposit supported Collateral tokens into a ZLP Vault, providing credit to the system. It can be any non-trusted address.
-  - Clients: Any offchain consumer, such as Zaros’ UI, an API service, etc.
-
+    USDz swapper: Someone that holds USDz and desires to sell it for a Vault 's collateral asset.
+    LPs: The market making engine's liquidity providers, i.e users that deposit supported Collateral tokens into a ZLP Vault, providing credit to the system. It can be any non-trusted address.
+    Clients: Any offchain consumer, such as Zaros’ UI, an API service, etc.
+```
 
 [//]: # (contest-details-close)
+
 [//]: # (scope-open)
 
 ## Scope (contracts)
 
 ```js
 src/
+├── external/
+│   └── chainlink/
+│   │   └── keepers/
+│   │   │    ├── debt-settlement-keeper/
+│   │   │    │   └── DebtSettlementKeeper.sol
+│   │   │    ├── fee-conversion-keeper/
+│   │   │    │    └── FeeConversionKeeper.sol
+│   │   │    └── usd-token-swap-keeper/
+│   │   │         └── UsdTokenSwapKeeper.sol
 ├── market-making/
 │   ├── branches/
 │   │   ├── CreditDelegationBranch.sol
@@ -114,6 +121,9 @@ src/
 │   │   ├── Vault.sol
 │   │   └── WithdrawalRequest.sol
 │   └── MarketMakingEngine.sol
+├── perpetuals/
+│   ├── LiquidationBranch::liquidateAccounts
+│   └── SettlementBranch::_fillOrder
 ├── referral/
 │   ├── interfaces/
 │   │   └── IReferral.sol
@@ -162,6 +172,7 @@ Compatibilities:
 ```
 
 [//]: # (scope-close)
+
 [//]: # (getting-started-open)
 
 ## Setup
@@ -180,6 +191,7 @@ Forge test
 ```
 
 [//]: # (getting-started-close)
+
 [//]: # (known-issues-open)
 
 ## Known Issues
@@ -188,5 +200,9 @@ Forge test
 - Zaros has a fee arrangement with Chainlink that waives paying verifications fees per call.
 - At v1, `PerpsEngine::getUnrealizedDebt` returns a zero value, which requires the protocol admin to configure system parameters with additional safety buffers as ZLP Vaults will be less sensitive to rapid market movements.
 - The protocol admin has access to sensitive functions for parameters configurations that must be called correctly in order to avoid putting users at dangerous states (centralization risks won't be considered as an issue).
+- No way to cancel initiated withdrawal results in stuck funds if redemption reverts
+- VaultRouterBranch and ZlpVault don't follow EIP4626 standard regarding previewDeposit and previewRedeem including fees
 
-[//]: # (known-issues-close)
+**Additional Known Issues as detected by LightChaser can be found [here](https://github.com/Cyfrin/2025-01-zaros-part-2/issues/1).
+
+  [//]: # (known-issues-close)
