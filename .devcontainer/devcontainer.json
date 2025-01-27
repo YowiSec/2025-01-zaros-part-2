@@ -1,0 +1,29 @@
+{
+  "name": "Web3 Security Research Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "[solidity]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      },
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-python.python",
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "esbenp.prettier-vscode",
+        "JuanBlanco.solidity",
+        "tintinweb.solidity-visual-auditor",
+        "NomicFoundation.hardhat-solidity"
+      ]
+    }
+  },
+  "forwardPorts": [8545],
+  "postCreateCommand": "foundryup && forge install && cyfrinup && pip3 install halmos && npm install -g prettier prettier-plugin-solidity solhint",
+  "remoteUser": "vscode"
+}
