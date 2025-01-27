@@ -14,8 +14,10 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
+    jq \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
-    
+
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
@@ -31,6 +33,9 @@ ENV PATH="/root/.foundry/bin:${PATH}"
 # Install Cyfrinup (which installs Aderyn)
 RUN curl -L https://raw.githubusercontent.com/Cyfrin/aderyn/dev/cyfrinup/install | bash
 ENV PATH="/root/.local/bin:${PATH}"
+
+# Fix potential permission issues for global npm packages
+RUN mkdir -p /usr/local/lib/node_modules && chmod -R 777 /usr/local/lib/node_modules
 
 # Install Slither
 RUN pip3 install slither-analyzer
