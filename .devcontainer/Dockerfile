@@ -48,7 +48,7 @@ RUN useradd -ms /bin/bash vscode
 USER vscode
 
 # Set the working directory
-WORKDIR /workspaces/${GITHUB_REPOSITORY##*/}
+WORKDIR /workspaces/2025-01-zaros-part-2
 
 # Ensure the PATH is set for the vscode user
 ENV PATH="/home/vscode/.cargo/bin:/home/vscode/.foundry/bin:/home/vscode/.local/bin:${PATH}"
