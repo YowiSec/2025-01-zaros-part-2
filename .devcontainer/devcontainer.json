@@ -27,3 +27,4 @@
   "postCreateCommand": "foundryup && forge install && cyfrinup && pip3 install halmos && npm install -g prettier prettier-plugin-solidity solhint",
   "remoteUser": "vscode"
 }
+
